@@ -1,16 +1,18 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { Container } from 'react-bootstrap';
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Container } from "react-bootstrap";
 
-import Login from './pages/Login';
-import Register from './pages/Register';
-import Workouts from './pages/Workouts';
-import AppNavbar from './components/AppNavbar';
-import Logout from './pages/Logout';
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Workouts from "./pages/Workouts";
+import AppNavbar from "./components/AppNavbar";
+import Logout from "./pages/Logout";
+import { UserProvider } from "./UserContext";
 
 function App() {
   return (
     <Router>
+      <UserProvider>
       <AppNavbar />
       <Container>
         <Routes>
@@ -20,6 +22,7 @@ function App() {
           <Route path="/workouts" element={<Workouts />} />
         </Routes>
       </Container>
+      </UserProvider>
     </Router>
   );
 }

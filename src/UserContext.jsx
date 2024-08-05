@@ -16,8 +16,7 @@ export const UserProvider = ({ children }) => {
     if (storedUser) {
       try {
         const parsedUser = JSON.parse(storedUser);
-        console.log('Parsed User from localStorage:', parsedUser); // Debugging
-        if (parsedUser && parsedUser.id) {
+        if (parsedUser) {
           setUser(parsedUser);
         }
       } catch (error) {

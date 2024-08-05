@@ -9,7 +9,6 @@ export default function AppNavbar() {
   const { user } = useContext(UserContext);
 
   useEffect(() => {
-    console.log('User in AppNavbar:', user); // Debugging
   }, [user]);
 
   return (
@@ -21,7 +20,7 @@ export default function AppNavbar() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
-            {user && user.id ? (
+            {user ? (
               <>
                 <Nav.Link as={NavLink} to="/workouts" className="text-white fs-4">
                   Workouts
