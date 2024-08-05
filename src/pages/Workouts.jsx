@@ -7,45 +7,45 @@ const Workouts = () => {
   const [selectedWorkout, setSelectedWorkout] = useState(null);
   const [newWorkout, setNewWorkout] = useState({ name: "", duration: "" });
   const [isEditing, setIsEditing] = useState(false);
+  
 
-  useEffect(() => {
-    // Fetch workouts from API
-    const fetchWorkouts = async () => {
-      try {
-        const response = await fetch(
-          `${import.meta.env.VITE_API_URL}/workouts/getMyWorkouts`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch workouts");
+  const fetchWorkouts = async () => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/workouts/getMyWorkouts`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
         }
+      );
 
-        const data = await response.json();
-        if (data.workouts) {
-          setWorkouts(data.workouts);
-        } else {
-          Swal.fire({
-            title: "Info",
-            text: data.message || "No workouts found.",
-            icon: "info",
-            confirmButtonText: "OK",
-          });
-        }
-      } catch (err) {
+      if (!response.ok) {
+        throw new Error("Failed to fetch workouts");
+      }
+
+      const data = await response.json();
+      if (data.workouts) {
+        setWorkouts(data.workouts);
+      } else {
         Swal.fire({
-          title: "Error!",
-          text: err.message || "An error occurred while fetching workouts.",
-          icon: "error",
+          title: "Info",
+          text: data.message || "No workouts found.",
+          icon: "info",
           confirmButtonText: "OK",
         });
       }
-    };
+    } catch (err) {
+      Swal.fire({
+        title: "Error!",
+        text: err.message || "An error occurred while fetching workouts.",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
+    }
+  };
 
+  useEffect(() => {
     fetchWorkouts();
   }, []);
 
@@ -76,9 +76,8 @@ const Workouts = () => {
         text: "Workout added successfully.",
         icon: "success",
         confirmButtonText: "OK",
-      }).then(() => {
-        window.location.reload(); // Refresh the page to see the updated list
-      });
+      })
+      await fetchWorkouts();
     } catch (err) {
       Swal.fire({
         title: "Error!",
@@ -119,9 +118,8 @@ const Workouts = () => {
         text: "Workout updated successfully.",
         icon: "success",
         confirmButtonText: "OK",
-      }).then(() => {
-        window.location.reload(); // Refresh the page to see the updated list
-      });
+      })
+      await fetchWorkouts();
     } catch (err) {
       Swal.fire({
         title: "Error!",
@@ -153,9 +151,8 @@ const Workouts = () => {
         text: "Workout deleted successfully.",
         icon: "success",
         confirmButtonText: "OK",
-      }).then(() => {
-        window.location.reload(); // Refresh the page to see the updated list
-      });
+      })
+      await fetchWorkouts();
     } catch (err) {
       Swal.fire({
         title: "Error!",
@@ -189,9 +186,8 @@ const Workouts = () => {
         text: "Workout status updated to completed.",
         icon: "success",
         confirmButtonText: "OK",
-      }).then(() => {
-        window.location.reload(); 
-      });
+      })
+      await fetchWorkouts();
     } catch (err) {
       Swal.fire({
         title: "Error!",
